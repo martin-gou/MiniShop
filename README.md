@@ -2,7 +2,7 @@
 
 A full-stack mini e-commerce site built with React (Vite) and Django (DRF): product list/detail, cart, and order flow. The backend uses session authentication, Django Admin for product/inventory management, and Postgres by default (Docker).
 
-Now it's fully deployed on Cloud, frontend on Netlify, backend on Render and database is on Neon. Checkout [frontend url](https://shiny-basbousa-7cd09c.netlify.app/).
+Now it's fully deployed on Cloud, frontend on Netlify, backend on Render and database is on Neon. Checkout [frontend url](https://shiny-basbousa-7cd09c.netlify.app/). Note that if not receiving inbounding traffic, [Render will spin down on idle](https://render.com/docs/free#other-limitations-1:~:text=paid%20instance%20type.-,Spinning%20down%20on%20idle,-Render%20spins%20down), so it'll take around half second to reactivate.
 ## Table of Contents
 - Scope
 - Tech Stack
