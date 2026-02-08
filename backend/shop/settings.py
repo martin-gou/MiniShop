@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from urllib.parse import parse_qsl, urlparse
 
 try:
     from dotenv import load_dotenv
@@ -72,9 +73,23 @@ TEMPLATES = [
 WSGI_APPLICATION = "shop.wsgi.application"
 ASGI_APPLICATION = "shop.asgi.application"
 
-USE_POSTGRES = bool(os.getenv("POSTGRES_HOST") or os.getenv("POSTGRES_DB"))
+DATABASE_URL = os.getenv("DATABASE_URL")
+USE_POSTGRES = bool(DATABASE_URL or os.getenv("POSTGRES_HOST") or os.getenv("POSTGRES_DB"))
 
-if USE_POSTGRES:
+if DATABASE_URL:
+    tmp_postgres = urlparse(DATABASE_URL)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": tmp_postgres.path.lstrip("/"),
+            "USER": tmp_postgres.username,
+            "PASSWORD": tmp_postgres.password,
+            "HOST": tmp_postgres.hostname,
+            "PORT": tmp_postgres.port or 5432,
+            "OPTIONS": dict(parse_qsl(tmp_postgres.query)),
+        }
+    }
+elif USE_POSTGRES:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
